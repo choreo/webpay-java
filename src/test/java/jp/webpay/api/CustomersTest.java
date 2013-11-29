@@ -39,6 +39,24 @@ public class CustomersTest extends ApiTestFixture {
     }
 
     @Test
+    public void testCreateCustomerWithToken() throws Exception {
+        stubFor(post("/v1/customers")
+                .withRequestBody(containing("description=Test"))
+                .withRequestBody(containing("email=customer"))
+                .withRequestBody(containing("card=tok_3dw2T20rzekM1Kf"))
+                .willReturn(response("customers/create")));
+        CustomerRequest request = new CustomerRequest()
+                .card("tok_3dw2T20rzekM1Kf")
+                .description("Test Customer from Java")
+                .email("customer@example.com");
+
+        Customer customer = client.customers.create(request);
+
+        assertThat(customer.getEmail(), is("customer@example.com"));
+        assertThat(customer.getActiveCard().getName(), is("YUUKO SHIONJI"));
+    }
+
+    @Test
     public void testRetrieveCustomer() throws Exception {
         stubFor(get("/v1/customers/cus_39o4Fv82E1et5Xb")
                 .willReturn(response("customers/retrieve")));
