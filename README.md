@@ -4,7 +4,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 
 ## Installation
 
-- [Artifact Details on Maven Central](http://search.maven.org/#artifactdetails%7Cjp.webpay%7Cwebpay-java%7C1.0.1%7Cjar)
+- [Artifact Details on Maven Central](http://search.maven.org/#artifactdetails%7Cjp.webpay%7Cwebpay-java%7C1.1.1%7Cjar)
 
 ### Maven users
 
