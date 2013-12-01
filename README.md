@@ -12,7 +12,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 <dependency>
   <groupId>jp.webpay</groupId>
   <artifactId>webpay-java</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.1</version>
 </dependency>
 ```
 
@@ -20,7 +20,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 
 ```
 dependencies {
-  compile 'jp.webpay:webpay-java:1.0.1'
+  compile 'jp.webpay:webpay-java:1.1.1'
 }
 ```
 
