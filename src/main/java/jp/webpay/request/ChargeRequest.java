@@ -12,6 +12,7 @@ public class ChargeRequest implements RequestEntity {
     private String currency = "jpy";
     private String description = "";
     private boolean capture = true;
+    private String uuid;
 
     public ChargeRequest amount(long amount) {
         this.amount = amount;
@@ -54,6 +55,11 @@ public class ChargeRequest implements RequestEntity {
         return this;
     }
 
+    public ChargeRequest uuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
     @Override
     public Form toForm() {
         Form form = new Form();
@@ -82,6 +88,9 @@ public class ChargeRequest implements RequestEntity {
             form.param("description", description);
         }
         form.param("capture", capture ? "true" : "false");
+        if (uuid != null) {
+            form.param("uuid", uuid);
+        }
 
         return form;
     }
