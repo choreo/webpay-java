@@ -7,6 +7,8 @@ import jp.webpay.request.ChargeRequest;
 import jp.webpay.request.ListRequest;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,6 +23,24 @@ public class ChargesTest extends ApiTestFixture {
                 .amount(1000)
                 .customer("cus_fgR4vI92r54I6oK")
                 .description("Test Charge from Java");
+
+        Charge charge = client.charges.create(request);
+
+        assertThat(charge.getAmount(), is(1000L));
+        assertThat(charge.getCustomer(), is("cus_fgR4vI92r54I6oK"));
+    }
+
+    @Test
+    public void testCreateChargeWithUUID() throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        stubFor(post("/v1/charges")
+                .withRequestBody(matching(".*uuid=" + uuid + ".*"))
+                .willReturn(response("charges/create_with_customer")));
+        ChargeRequest request = new ChargeRequest()
+                .amount(1000)
+                .customer("cus_fgR4vI92r54I6oK")
+                .description("Test Charge from Java")
+                .uuid(uuid);
 
         Charge charge = client.charges.create(request);
 
