@@ -7,6 +7,7 @@ public class CustomerRequest implements RequestEntity {
     private String cardToken;
     private String email;
     private String description;
+    private String uuid;
 
     public CustomerRequest card(CardRequest card) {
         this.card = card;
@@ -30,6 +31,11 @@ public class CustomerRequest implements RequestEntity {
         return this;
     }
 
+    public CustomerRequest uuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
     @Override
     public Form toForm() {
         Form form = new Form();
@@ -43,6 +49,9 @@ public class CustomerRequest implements RequestEntity {
         }
         if (description != null && !description.isEmpty()) {
             form.param("description", description);
+        }
+        if (uuid != null && !uuid.isEmpty()) {
+            form.param("uuid", uuid);
         }
         return form;
     }

@@ -8,6 +8,8 @@ import jp.webpay.request.CustomerRequest;
 import jp.webpay.request.ListRequest;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -36,6 +38,21 @@ public class CustomersTest extends ApiTestFixture {
 
         assertThat(customer.getEmail(), is("customer@example.com"));
         assertThat(customer.getActiveCard().getName(), is("YUUKO SHIONJI"));
+    }
+
+    @Test
+    public void testCreateCustomerWithUUID() throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        stubFor(post("/v1/customers")
+                .withRequestBody(containing("uuid=" + uuid))
+                .willReturn(response("customers/create")));
+        CustomerRequest request = new CustomerRequest()
+                .email("customer@example.com")
+                .uuid(uuid);
+
+        Customer customer = client.customers.create(request);
+
+        assertThat(customer.getEmail(), is("customer@example.com"));
     }
 
     @Test
