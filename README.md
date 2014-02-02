@@ -4,7 +4,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 
 ## Installation
 
-- [Artifact Details on Maven Central](http://search.maven.org/#artifactdetails%7Cjp.webpay%7Cwebpay-java%7C1.1.1%7Cjar)
+- [Artifact Details on Maven Central](http://search.maven.org/#artifactdetails%7Cjp.webpay%7Cwebpay-java%7C1.1.2%7Cjar)
 
 ### Maven users
 
@@ -12,7 +12,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 <dependency>
   <groupId>jp.webpay</groupId>
   <artifactId>webpay-java</artifactId>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
 </dependency>
 ```
 
@@ -20,7 +20,7 @@ WebPay Java (1.6 and later) bindings https://webpay.jp
 
 ```
 dependencies {
-  compile 'jp.webpay:webpay-java:1.1.1'
+  compile 'jp.webpay:webpay-java:1.1.2'
 }
 ```
 
