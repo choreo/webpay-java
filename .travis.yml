@@ -11,3 +11,6 @@ script:
 matrix:
   allow_failures:
     - jdk: oraclejdk8
+notifications:
+  webhooks:
+    secure: "lx/5MKp/sx00YnkZQuGABPLTP2np/KqENYpLazcA1zbGw3UcQw4wFIqAcxApWb+kfZOZEFhp5VUfMuZ3QactSK/YHjxBMqp+I3zxwgcXxon5PnF86vmjwHKV+cgteUuxXvjEcXc7zb/LCo7Yod6l0xdVq2DcuasXR4+X8QAQehg="
