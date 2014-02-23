@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class WebPayClient {
@@ -25,6 +26,8 @@ public class WebPayClient {
     private final String apiKey;
     private final String apiBase;
     private final Client client;
+    
+    private Locale acceptLanguage = Locale.ENGLISH;
 
     public final Charges charges;
     public final Customers customers;
@@ -50,12 +53,17 @@ public class WebPayClient {
         events = new Events(this);
         account = new Account(this);
     }
+    
+    public WebPayClient acceptLanguage(Locale locale) {
+        this.acceptLanguage = locale;
+        return this;
+    }
 
     String post(@NonNull String path, Form form) {
         WebTarget target = client.target(apiBase).path(path);
         Response response;
         try {
-            response = target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.form(form));
+            response = target.request(MediaType.APPLICATION_JSON_TYPE).acceptLanguage(this.acceptLanguage).post(Entity.form(form));
         } catch (javax.ws.rs.ProcessingException e) {
             throw new ApiConnectionException(e);
         }
@@ -76,7 +84,7 @@ public class WebPayClient {
         }
         Response response;
         try {
-            response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
+            response = target.request(MediaType.APPLICATION_JSON_TYPE).acceptLanguage(this.acceptLanguage).get();
         } catch (javax.ws.rs.ProcessingException e) {
             throw new ApiConnectionException(e);
         }
