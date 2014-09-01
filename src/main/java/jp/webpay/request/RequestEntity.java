@@ -1,7 +1,8 @@
 package jp.webpay.request;
 
-import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedMap;
 
+@SuppressWarnings("javadoc")
 public interface RequestEntity {
-    public Form toForm();
+    public MultivaluedMap<String, String> toForm();
 }

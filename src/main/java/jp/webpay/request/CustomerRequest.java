@@ -1,7 +1,13 @@
 package jp.webpay.request;
 
-import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedMap;
 
+import lombok.val;
+
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+
+@SuppressWarnings("javadoc")
 public class CustomerRequest implements RequestEntity {
     private CardRequest card;
     private String cardToken;
@@ -37,21 +43,21 @@ public class CustomerRequest implements RequestEntity {
     }
 
     @Override
-    public Form toForm() {
-        Form form = new Form();
+    public MultivaluedMap<String, String> toForm() {
+        val form = new MultivaluedMapImpl();
         if (card != null) {
             card.addParams(form);
         } else if (cardToken != null) {
-            form.param("card", cardToken);
+            form.add("card", cardToken);
         }
         if (email != null && !email.isEmpty()) {
-            form.param("email", email);
+            form.add("email", email);
         }
         if (description != null && !description.isEmpty()) {
-            form.param("description", description);
+            form.add("description", description);
         }
         if (uuid != null && !uuid.isEmpty()) {
-            form.param("uuid", uuid);
+            form.add("uuid", uuid);
         }
         return form;
     }

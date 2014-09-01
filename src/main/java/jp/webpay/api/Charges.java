@@ -1,13 +1,16 @@
 package jp.webpay.api;
 
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 import jp.webpay.model.Charge;
 import jp.webpay.model.ChargeList;
 import jp.webpay.request.ChargeRequest;
 import jp.webpay.request.ListRequest;
 import lombok.NonNull;
+import lombok.val;
 
-import javax.ws.rs.core.Form;
 
+@SuppressWarnings("javadoc")
 public class Charges extends Accessor {
     Charges(@NonNull WebPayClient client) {
         super(client);
@@ -24,20 +27,20 @@ public class Charges extends Accessor {
 
     public Charge refund(@NonNull String id, long amount) {
         assertId(id);
-        Form form = new Form();
-        form.param("amount", String.valueOf(amount));
+        val form = new MultivaluedMapImpl();
+        form.add("amount", String.valueOf(amount));
         return Charge.fromJsonResponse(client, client.post("/charges/" + id + "/refund", form));
     }
 
     public Charge capture(@NonNull String id) {
         assertId(id);
-        return Charge.fromJsonResponse(client, client.post("/charges/" + id + "/capture", new Form()));
+        return Charge.fromJsonResponse(client, client.post("/charges/" + id + "/capture", new MultivaluedMapImpl()));
     }
 
     public Charge capture(@NonNull String id, long amount) {
         assertId(id);
-        Form form = new Form();
-        form.param("amount", String.valueOf(amount));
+        val form = new MultivaluedMapImpl();
+        form.add("amount", String.valueOf(amount));
         return Charge.fromJsonResponse(client, client.post("/charges/" + id + "/capture", form));
     }
 
@@ -55,9 +58,9 @@ public class Charges extends Accessor {
     }
 
     public ChargeList all(@NonNull ListRequest request, String customerId) {
-        Form form = request.toForm();
+        val form = new MultivaluedMapImpl();
         if (customerId != null && !customerId.isEmpty()) {
-            form.param("customer", customerId);
+            form.add("customer", customerId);
         }
         return ChargeList.fromJsonResponse(client, client.get("/charges", form));
     }

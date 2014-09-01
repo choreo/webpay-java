@@ -1,11 +1,14 @@
 package jp.webpay.api;
 
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 import jp.webpay.model.Token;
 import jp.webpay.request.CardRequest;
 import lombok.NonNull;
+import lombok.val;
 
-import javax.ws.rs.core.Form;
 
+@SuppressWarnings("javadoc")
 public class Tokens extends Accessor {
     Tokens(WebPayClient client) {
         super(client);
@@ -16,9 +19,9 @@ public class Tokens extends Accessor {
     }
 
     public Token create(@NonNull CardRequest request, String uuid) {
-        Form form = request.toForm();
+        val form = new MultivaluedMapImpl();
         if (uuid != null && !uuid.isEmpty())
-            form.param("uuid", uuid);
+            form.add("uuid", uuid);
         return Token.fromJsonResponse(client, client.post("/tokens", form));
     }
 

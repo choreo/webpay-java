@@ -1,7 +1,13 @@
 package jp.webpay.request;
 
-import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedMap;
 
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
+import lombok.val;
+
+
+@SuppressWarnings("javadoc")
 public class ListRequest implements RequestEntity {
     private int count = 10, offset = 0;
     private Integer createdGt, createdGte, createdLt, createdLte;
@@ -37,21 +43,21 @@ public class ListRequest implements RequestEntity {
     }
 
     @Override
-    public Form toForm() {
-        Form form = new Form();
-        form.param("count", String.valueOf(count));
-        form.param("offset", String.valueOf(offset));
+    public MultivaluedMap<String, String> toForm() {
+        val form = new MultivaluedMapImpl();
+        form.add("count", String.valueOf(count));
+        form.add("offset", String.valueOf(offset));
         if (createdGt != null) {
-            form.param("created[gt]", createdGt.toString());
+            form.add("created[gt]", createdGt.toString());
         }
         if (createdGte != null) {
-            form.param("created[gte]", createdGte.toString());
+            form.add("created[gte]", createdGte.toString());
         }
         if (createdLt != null) {
-            form.param("created[lt]", createdLt.toString());
+            form.add("created[lt]", createdLt.toString());
         }
         if (createdLte != null) {
-            form.param("created[lte]", createdLte.toString());
+            form.add("created[lte]", createdLte.toString());
         }
         return form;
     }

@@ -1,9 +1,14 @@
 package jp.webpay.request;
 
+import javax.ws.rs.core.MultivaluedMap;
+
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 import lombok.NonNull;
+import lombok.val;
 
-import javax.ws.rs.core.Form;
 
+@SuppressWarnings("javadoc")
 public class ChargeRequest implements RequestEntity {
     private Long amount;
     private String customer;
@@ -61,35 +66,35 @@ public class ChargeRequest implements RequestEntity {
     }
 
     @Override
-    public Form toForm() {
-        Form form = new Form();
+    public MultivaluedMap<String, String> toForm() {
+        val form = new MultivaluedMapImpl();
 
         if (amount == null) {
             throw new RequiredParamNotSetException("amount");
         } else {
-            form.param("amount", amount.toString());
+            form.add("amount", amount.toString());
         }
         if (currency == null) {
             throw new RequiredParamNotSetException("currency");
         } else {
-            form.param("currency", currency);
+            form.add("currency", currency);
         }
         if (customer != null) {
-            form.param("customer", customer);
+            form.add("customer", customer);
         } else if (cardToken != null) {
-            form.param("card", cardToken);
+            form.add("card", cardToken);
         } else if (cardObject != null) {
             cardObject.addParams(form);
-            form.param("card[number]", cardToken);
+            form.add("card[number]", cardToken);
         } else {
             throw new RequiredParamNotSetException("card");
         }
         if (description != null) {
-            form.param("description", description);
+            form.add("description", description);
         }
-        form.param("capture", capture ? "true" : "false");
+        form.add("capture", capture ? "true" : "false");
         if (uuid != null) {
-            form.param("uuid", uuid);
+            form.add("uuid", uuid);
         }
 
         return form;

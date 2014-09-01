@@ -1,12 +1,15 @@
 package jp.webpay.api;
 
+import com.sun.jersey.core.util.MultivaluedMapImpl;
+
 import jp.webpay.model.Event;
 import jp.webpay.model.EventList;
 import jp.webpay.request.ListRequest;
 import lombok.NonNull;
+import lombok.val;
 
-import javax.ws.rs.core.Form;
 
+@SuppressWarnings("javadoc")
 public class Events extends Accessor {
     protected Events(WebPayClient client) {
         super(client);
@@ -30,9 +33,9 @@ public class Events extends Accessor {
     }
 
     public EventList all(@NonNull ListRequest request, String type) {
-        Form form = request.toForm();
+        val form = new MultivaluedMapImpl();
         if (type != null && !type.isEmpty()) {
-            form.param("type", type);
+            form.add("type", type);
         }
         return EventList.fromJsonResponse(client, client.get("/events", form));
     }
